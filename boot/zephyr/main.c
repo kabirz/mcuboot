@@ -464,6 +464,13 @@ int main(void)
 
     mcuboot_status_change(MCUBOOT_STATUS_STARTUP);
 
+#ifdef CONFIG_MCUBOOT_UDP
+    extern int boot_udp_init(void);
+    extern void boot_udp_start(int timeout_in_s);
+    if (boot_udp_init() >= 0)
+        boot_udp_start(CONFIG_MCUBOOT_UDP_WAIT_TIMEOUT);
+#endif
+
 #ifdef CONFIG_BOOT_SERIAL_ENTRANCE_GPIO
     if (io_detect_pin() &&
             !io_boot_skip_serial_recovery()) {

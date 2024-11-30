@@ -275,6 +275,8 @@ if(CONFIG_MCUBOOT_SERIAL)
   endif()
 endif()
 
+zephyr_sources_ifdef(CONFIG_MCUBOOT_UDP ${BOOT_DIR}/zephyr/boot_udp.c)
+
 if(NOT CONFIG_BOOT_SIGNATURE_KEY_FILE STREQUAL "")
   # CONF_FILE points to the KConfig configuration files of the bootloader.
   foreach (filepath ${CONF_FILE})

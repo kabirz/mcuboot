@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+menuconfig MCUBOOT_UDP
+	bool "MCUboot UDP recovery"
+	default n
+	select REBOOT
+	select NETWORKING
+	select NET_UDP
+	select ZCBOR
+	depends on !BOOT_FIRMWARE_LOADER
+	help
+	  If y, enables a udp based update mode. This allows
+	  MCUboot itself to load update images into flash over UDP.
+	  If unsure, leave at the default value.
+
+if MCUBOOT_UDP
+
+config MCUBOOT_UDP_IP_ADDRESS
+	string "network ip address"
+	default "192.168.12.101"
+
+config MCUBOOT_UDP_PORT
+	int "UDP SMP port"
+	default 1337
+	help
+	  UDP port that SMP server will listen for SMP commands on.
+
+config UDP_LINK_COUNT
+	int "network link count"
+	default 50
+
+config MCUBOOT_UDP_WAIT_TIMEOUT
+	int "Duration to wait for the udp timeout in s"
+	default 3
+	help
+	  Timeout in ms for MCUboot to wait to allow for DFU to be invoked.
+
+endif
